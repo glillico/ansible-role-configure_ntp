@@ -1,2 +1,10 @@
 ---
-# defaults file for ansible-role-ntp
+# defaults file for ansible-role-configure_ntp
+
+cntp_servers:
+  - "0.uk.pool.ntp.org"
+  - "1.uk.pool.ntp.org"
+  - "2.uk.pool.ntp.org"
+  - "3.uk.pool.ntp.org"
+
+cntp_disable_monitor: ""

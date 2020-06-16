@@ -1,4 +1,4 @@
-# Role Name
+# Ansible Role : configure_ntp
 
 A brief description of the role goes here.
 

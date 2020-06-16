@@ -1,2 +1,60 @@
 ---
-# tasks file for ansible-role-ntp
+# tasks file for ansible-role-configure_ntp
+
+- name: Include OS-specific variables.
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+    - '{{ ansible_os_family }}.yml'
+
+- name: Update apt cache.
+  apt:
+    update_cache: true
+    cache_valid_time: 600
+  when: ansible_os_family == 'Debian'
+
+- name: Define cntp_ntp_service_name.
+  set_fact:
+    cntp_ntp_service_name: "{{ __cntp_ntp_service_name }}"
+  when: cntp_ntp_service_name is not defined
+
+- name: Define cntp_ntp_package_name.
+  set_fact:
+    cntp_ntp_package_name: "{{ __cntp_ntp_package_name }}"
+  when: cntp_ntp_package_name is not defined
+
+- name: Define cntp_configuration_file.
+  set_fact:
+    cntp_configuration_file: "{{ __cntp_configuration_file }}"
+  when: cntp_configuration_file is not defined
+
+- name: Set cntp_disable_monitor on RHEL 7 based systems.
+  set_fact:
+    cntp_disable_monitor: "true"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+
+- name: Ensure the NTP service package is installed.
+  package:
+    name: "{{ cntp_ntp_package_name }}"
+    state: present
+    update_cache: true
+
+- name: Ensure NTP service is running and enabled to start on boot.
+  service:
+    name: '{{ cntp_ntp_service_name }}'
+    state: started
+    enabled: yes
+
+- name: Deploy NTP service configuration file.
+  template:
+    src: 'etc/{{ item | basename }}.j2'
+    dest: '{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  with_items:
+    - '{{ cntp_configuration_file }}'
+  notify: Restart NTP service
