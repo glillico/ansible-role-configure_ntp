@@ -1,16 +1,8 @@
 ---
 # Debain defaults file for ansible-role-configure_ntp
 
-#ntp
 __cntp_ntp_service_name: ntp
 __cntp_ntp_package_name: ntp
 __cntp_configuration_file: /etc/ntp.conf
 cntp_driftfile: /var/lib/ntp/ntp.drift
 cntp_leapseconds: /usr/share/zoneinfo/leap-seconds.list
-
-# chrony
-#__cntp_ntp_service_name: chrony
-#__cntp_ntp_package_name: chrony
-#__cntp_configuration_file: /etc/chrony/chrony.conf
-#cntp_driftfile: /var/lib/chrony/chrony.drift
-#cntp_keysfile: /etc/chrony/chrony.keys

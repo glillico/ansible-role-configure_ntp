@@ -1,28 +1,61 @@
 # Ansible Role : configure_ntp
 
-A brief description of the role goes here.
+This role installs and configures either `ntp` or `chrony` on RedHat and Debian based systems.
+
+***NOTE:***<br>
+The ntp package cannot be installed on a RedHat 8 based system using the standard repositories, as there is no package available.
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### defaults/main.yml
+|Variable|Description|
+|---|:---|
+|cntp_servers|A list of time servers to use.|
+
+### vars/Debian.yml
+|Variable|Description|
+|---|:---|
+|__cntp_ntp_service_name|The name of the ntp service.<br>(Options: ntp, chrony).|
+|__cntp_ntp_package_name|The name of the ntp package.<br>(Options: ntp, chrony).|
+|__cntp_configuration_file|Full path and name of the ntp service configuration file.<br>(Options: ntp:/etc/ntp.conf, chrony:/etc/chrony/chrony.conf).|
+|cntp_driftfile|Full path and name of the ntp service drift file.<br>(Options: ntp:/var/lib/ntp/ntp.drift, chrony:/var/lib/chrony/chrony.drift).|
+|cntp_leapseconds|Full path and name of the ntp service leap seconds file.<br>(Options: /usr/share/zoneinfo/leap-seconds.list).<br>**This applies to ntp only.**|
+|cntp_keysfile|Full path and name of the ntp service configuration file.<br>(Options: /etc/chrony/chrony.keys).<br>**This applies to chrony only.**|
+
+### vars/RedHat.yml
+|Variable|Description|
+|---|:---|
+|__cntp_ntp_service_name|The name of the ntp service.<br>(Options: ntpd, chronyd).|
+|__cntp_ntp_package_name|The name of the ntp package.<br>(Options: ntp, chrony).|
+|__cntp_configuration_file|Full path and name of the ntp service configuration file.<br>(Options: ntp:/etc/ntp.conf, chrony:/etc/chrony.conf).|
+|cntp_driftfile|Full path and name of the ntp service drift file.<br>(Options: ntp:/var/lib/ntp/drift, chrony:/var/lib/chrony/drift).|
+|cntp_leapseconds|Full path and name of the ntp service leap seconds file.<br>(Options: /usr/share/zoneinfo/leapseconds).<br>**This applies to ntp only.**|
+|cntp_keysfile|Full path and name of the ntp service configuration file.<br>(Options: /etc/chrony.keys).<br>**This applies to chrony only.**|
+
+### vars/RedHat-8.yml
+|Variable|Description|
+|---|:---|
+|__cntp_ntp_service_name|The name of the ntp service.<br>(Options: chronyd).|
+|__cntp_ntp_package_name|The name of the ntp package.<br>(Options: chrony).|
+|__cntp_configuration_file|Full path and name of the ntp service configuration file.<br>(Options: /etc/chrony.conf).|
+|cntp_driftfile|Full path and name of the ntp service drift file.<br>(Options: /var/lib/chrony/drift).|
+|cntp_keysfile|Full path and name of the ntp service configuration file.<br>(Options: /etc/chrony.keys).|
 
 ## Dependencies
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 ## Example Playbook
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
       vars_files:
         - vars/main.yml
       roles:
-        - ROLENAME
+        - glillico.configure_ntp
 
 ## License
 
