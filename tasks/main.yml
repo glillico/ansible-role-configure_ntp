@@ -33,7 +33,9 @@
 - name: Set cntp_disable_monitor on RHEL 7 based systems.
   set_fact:
     cntp_disable_monitor: "true"
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+  when: (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] == "7") or
+        (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7") or
+        (ansible_facts['distribution'] == "Amazon" and ansible_facts['distribution_major_version'] == "2")
 
 - name: Ensure the NTP service package is installed.
   package:
