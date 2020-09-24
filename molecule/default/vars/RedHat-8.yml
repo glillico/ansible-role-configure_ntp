@@ -1,0 +1,5 @@
+---
+# RedHat 8 defaults file for ansible-role-configure_ntp
+
+cntp_ntp_package_name: chrony
+cntp_configuration_file: /etc/chrony.conf

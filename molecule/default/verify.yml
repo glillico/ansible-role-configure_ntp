@@ -1,0 +1,40 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Include OS-specific variables.
+    include_vars: "{{ item }}"
+    with_first_found:
+      - 'vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+      - 'vars/{{ ansible_distribution }}.yml'
+      - 'vars/{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml'
+      - 'vars/{{ ansible_os_family }}.yml'
+
+  - name: Check the '{{ cntp_ntp_package_name }}' package status.
+    package:
+      name: '{{ cntp_ntp_package_name }}'
+      state: present
+    check_mode: yes
+    register: pkg_status
+
+  - name: Test that the '{{ cntp_ntp_package_name }}' package is installed.
+    assert:
+      that:
+        - not pkg_status.changed
+
+  - name: Retrieve the file information for '{{ cntp_configuration_file }}'.
+    stat:
+      path: '{{ cntp_configuration_file }}'
+    register: remote_file
+
+  - name: Test that the '{{ cntp_configuration_file }}' file was created correctly.
+    assert:
+      that:
+        - remote_file.stat.exists
+        - remote_file.stat.isreg
+        - remote_file.stat.path == '{{ cntp_configuration_file }}'
+        - remote_file.stat.mode == '0644'
+        - remote_file.stat.pw_name == 'root'
+        - remote_file.stat.gr_name == 'root'
