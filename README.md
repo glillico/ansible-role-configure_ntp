@@ -1,6 +1,6 @@
 # Ansible Role : configure_ntp
 
-[![Build Status](https://github.com/glillico/ansible-role-configure_ntp/workflows/build/badge.svg)](https://github.com/glillico/ansible-role-configure_ntp/actions?query=workflow%3Abuild)
+[![molecule](https://github.com/glillico/ansible-role-configure_ntp/workflows/molecule/badge.svg)](https://github.com/glillico/ansible-role-configure_ntp/actions?query=workflow%3Amolecule)
 
 This role installs and configures either `ntp` or `chrony` on RedHat and Debian based systems.
 
