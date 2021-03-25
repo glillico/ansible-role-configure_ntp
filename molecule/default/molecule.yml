@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: "glillico/docker-${MOLECULE_DISTRO:-centos7}-ansible:${MOLECULE_TAG:-latest}"
+    image: "quay.io/aminvakil/${MOLECULE_DISTRO}-systemd:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
