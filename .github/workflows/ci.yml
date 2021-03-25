@@ -10,26 +10,6 @@ on:
     - cron: '35 2 * * *'
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out git repository.
-        uses: actions/checkout@v2
-
-      - name: Setup python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install package dependencies.
-        run: pip3 install ansible ansible-lint yamllint
-
-      - name: Perform linting.
-        run: |
-          yamllint .
-          ansible-lint
-
   molecule:
     needs: lint
     name: Molecule
@@ -38,13 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - amazonlinux2
           - centos7
           - centos8
-          - debian9
-          - debian10
-          - ubuntu1804
-          - ubuntu2004
         tag:
           - latest
     steps:
