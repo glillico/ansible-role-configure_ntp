@@ -17,6 +17,7 @@ None.
 |Variable|Description|
 |---|:---|
 |cntp_servers|A list of time servers to use.|
+|cntp_ntp_service_enable|Enable and start the NTP service when set to `true`.|
 
 ### vars/Debian.yml
 |Variable|Description|
