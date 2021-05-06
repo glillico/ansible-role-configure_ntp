@@ -48,6 +48,7 @@
     name: '{{ cntp_ntp_service_name }}'
     state: started
     enabled: yes
+  when: cntp_ntp_service_enable | bool
 
 - name: Deploy NTP service configuration file.
   template:
