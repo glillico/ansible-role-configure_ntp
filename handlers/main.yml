@@ -5,3 +5,4 @@
   service:
     name: '{{ cntp_ntp_service_name }}'
     state: restarted
+  when: cntp_ntp_service_enable | bool

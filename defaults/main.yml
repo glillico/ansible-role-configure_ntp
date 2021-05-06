@@ -8,3 +8,5 @@ cntp_servers:
   - "3.uk.pool.ntp.org"
 
 cntp_disable_monitor: ""
+
+cntp_ntp_service_enable: true
