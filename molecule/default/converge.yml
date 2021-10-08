@@ -5,7 +5,5 @@
   vars:
     cntp_ntp_service_enable: false
 
-  tasks:
-    - name: "Include ansible-role-configure_ntp"
-      include_role:
-        name: "ansible-role-configure_ntp"
+  roles:
+    - role: glillico.configure_ntp
