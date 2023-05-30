@@ -1,0 +1,8 @@
+---
+# RedHat defaults file for ansible-role-configure_ntp
+
+__cntp_ntp_service_name: ntpd
+__cntp_ntp_package_name: ntp
+__cntp_configuration_file: /etc/ntp.conf
+cntp_driftfile: /var/lib/ntp/drift
+cntp_leapseconds: /usr/share/zoneinfo/leapseconds

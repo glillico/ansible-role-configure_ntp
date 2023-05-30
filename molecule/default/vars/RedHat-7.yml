@@ -1,0 +1,5 @@
+---
+# RedHat defaults file for ansible-role-configure_ntp
+
+cntp_ntp_package_name: ntp
+cntp_configuration_file: /etc/ntp.conf
