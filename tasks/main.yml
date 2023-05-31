@@ -30,7 +30,7 @@
     cntp_configuration_file: "{{ __cntp_configuration_file }}"
   when: cntp_configuration_file is not defined
 
-- name: Set cntp_disable_monitor on RHEL 7 based systems.
+- name: Set fact on RHEL 7 based systems.
   set_fact:
     cntp_disable_monitor: "true"
   when: (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] == "7") or
@@ -43,7 +43,7 @@
     state: present
     update_cache: true
 
-- name: Ensure NTP service is running and enabled to start on boot.
+- name: Ensure NTP service is running and enabled on boot.
   service:
     name: '{{ cntp_ntp_service_name }}'
     state: started
