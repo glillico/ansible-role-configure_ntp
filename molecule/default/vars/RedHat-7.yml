@@ -3,3 +3,4 @@
 
 cntp_ntp_package_name: ntp
 cntp_configuration_file: /etc/ntp.conf
+cntp_ntp_service_enable: true

@@ -2,8 +2,5 @@
 - name: Converge
   hosts: all
 
-  vars:
-    cntp_ntp_service_enable: false
-
   roles:
     - role: glillico.configure_ntp
